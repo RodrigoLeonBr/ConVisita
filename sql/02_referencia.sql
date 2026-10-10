@@ -37,5 +37,6 @@ INSERT INTO tipo_unidade (id,nome) VALUES (11,'Entidade Parceira / Conveniada');
 INSERT INTO tipo_unidade (id,nome) VALUES (12,'A classificar');
 INSERT INTO ciclo (id,nome,data_inicio,data_fim) VALUES (1,'2023','2023-01-01','2023-12-31');
 INSERT INTO ciclo (id,nome,data_inicio,data_fim) VALUES (2,'2026','2026-01-01','2026-12-31');
--- usuario inicial: admin / comsaude (TROCAR APOS O PRIMEIRO ACESSO)
-INSERT INTO usuario (nome,login,senha_hash,perfil) VALUES ('Administrador','admin','$2y$10$WBK9qk1lc2b/sdkldyitROorYsLwptTreA7SAN27IBwXpIiaBTyxe','admin');
+-- usuario inicial admin. Senha SEM valor utilizavel aqui: o instalar.php gera uma senha
+-- aleatoria e a exibe uma unica vez. Login fica impossivel ate a instalacao definir a senha.
+INSERT INTO usuario (nome,login,senha_hash,perfil) VALUES ('Administrador','admin','!sem-senha-defina-no-instalar','admin');

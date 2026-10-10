@@ -9,10 +9,31 @@ function coluna_existe(PDO $pdo, string $tabela, string $coluna): bool
     return (int)$st->fetchColumn() > 0;
 }
 
+function tabela_existe(PDO $pdo, string $tabela): bool
+{
+    $st = $pdo->prepare('SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?');
+    $st->execute([$tabela]);
+    return (int)$st->fetchColumn() > 0;
+}
+
 function garante_esquema(PDO $pdo): void
 {
+    // Migrações usam DDL (CREATE/ALTER). O usuário de runtime tem só DML (privilégio mínimo),
+    // então aplicamos cada passo apenas quando falta e nunca derrubamos a página: se o DDL for
+    // negado, registramos no log — rode instalar.php/upgrade com credencial administrativa.
+    try {
+        garante_esquema_ddl($pdo);
+    } catch (PDOException $ex) {
+        error_log('garante_esquema: migracao pendente nao aplicada (usuario sem DDL?): ' . $ex->getMessage());
+    }
+}
+
+function garante_esquema_ddl(PDO $pdo): void
+{
     // Tabela de parametros do sistema
-    $pdo->exec('CREATE TABLE IF NOT EXISTS sistema (chave VARCHAR(60) PRIMARY KEY, valor TEXT NULL) ENGINE=InnoDB');
+    if (!tabela_existe($pdo, 'sistema')) {
+        $pdo->exec('CREATE TABLE IF NOT EXISTS sistema (chave VARCHAR(60) PRIMARY KEY, valor TEXT NULL) ENGINE=InnoDB');
+    }
 
     // Identificador unico das visitas (permite trocar dados entre computadores)
     if (!coluna_existe($pdo, 'visita', 'uuid')) {
