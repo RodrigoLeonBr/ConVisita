@@ -20,3 +20,6 @@ Thumbs.db
 .DS_Store
 .vscode/
 .idea/
+
+# Relatório de segurança: detalha furos não corrigidos — não publicar em repo público.
+docs/SEGURANCA.md
