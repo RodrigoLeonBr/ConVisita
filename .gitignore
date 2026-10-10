@@ -29,3 +29,6 @@ docs/SEGURANCA.md
 
 # Diretório temporário de vendor travado pelo Windows (remover depois)
 vendor_old*
+
+# Cache do PHPUnit
+.phpunit.result.cache
