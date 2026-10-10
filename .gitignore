@@ -1,0 +1,15 @@
+# Credenciais e conexão por ambiente (cada máquina/servidor tem o seu)
+config.php
+
+# Dados gerados em runtime (backups contêm dados reais)
+backups/
+
+# Pacotes e artefatos de distribuição
+*.rar
+*.zip
+
+# Sistema operacional / editores
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
