@@ -19,7 +19,9 @@ try {
         $msgs[] = 'O banco já está instalado. Para reinstalar (apagando todos os dados), defina permitir_reinstalar = true em config.php.';
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach (['01_estrutura.sql', '02_referencia.sql', '03_carga_historica.sql'] as $arq) {
-            $sql = file_get_contents(__DIR__ . '/sql/' . $arq);
+            $caminhoSql = __DIR__ . '/sql/' . $arq;
+            if (!is_file($caminhoSql)) { $msgs[] = "$arq: ausente, ignorado."; continue; }
+            $sql = file_get_contents($caminhoSql);
             $sql = preg_replace('/^\s*--.*$/m', '', $sql);
             // usa sempre o banco configurado em config.php (em cPanel o nome tem prefixo da conta)
             $sql = preg_replace('/^\s*(CREATE DATABASE|USE)\b[^;]*;/mi', '', $sql);

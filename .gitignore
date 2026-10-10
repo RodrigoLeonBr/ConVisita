@@ -8,6 +8,13 @@ backups/
 *.rar
 *.zip
 
+# Dados reais do município — não versionar em repositório público.
+# O instalador roda sem a carga histórica (só estrutura + referência).
+sql/03_carga_historica.sql
+planilha/
+docs/manual/
+Claude outputs/
+
 # Sistema operacional / editores
 Thumbs.db
 .DS_Store
