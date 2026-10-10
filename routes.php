@@ -1,5 +1,5 @@
 <?php
-use Convisita\Controllers\{PainelController, AuthController, VisitaController, UnidadeController, AgendaController};
+use Convisita\Controllers\{PainelController, AuthController, VisitaController, UnidadeController, AgendaController, PendenciaController, ComparativoController};
 return [
     'GET /'        => [PainelController::class, 'index'],
     'GET /painel'  => [PainelController::class, 'index'],
@@ -20,4 +20,11 @@ return [
     'GET /unidade/{id}'      => [UnidadeController::class, 'ver'],
 
     'GET /agenda'            => [AgendaController::class, 'index'],
+
+    'GET /pendencias'          => [PendenciaController::class, 'index'],
+    'GET /pendencia/nova'      => [PendenciaController::class, 'novo'],
+    'POST /pendencia/salvar'   => [PendenciaController::class, 'salvar'],
+    'GET /pendencia/{id}/editar' => [PendenciaController::class, 'editar'],
+
+    'GET /comparativo'       => [ComparativoController::class, 'index'],
 ];
