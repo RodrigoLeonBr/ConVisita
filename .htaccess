@@ -12,3 +12,13 @@ DirectoryIndex index.php
     Deny from all
   </IfModule>
 </FilesMatch>
+
+# Front controller: tudo que nao for arquivo/pasta real vai para index-fc.php
+# (na Task 11, com as paginas antigas removidas, passa a ser index.php)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  RewriteRule ^ index-fc.php [L]
+</IfModule>
