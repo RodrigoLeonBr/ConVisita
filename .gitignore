@@ -4,6 +4,9 @@ config.php
 # Dados gerados em runtime (backups contêm dados reais)
 backups/
 
+# Dependências de dev (Composer) — runtime não usa vendor/
+/vendor/
+
 # Pacotes e artefatos de distribuição
 *.rar
 *.zip
@@ -23,3 +26,6 @@ Thumbs.db
 
 # Relatório de segurança: detalha furos não corrigidos — não publicar em repo público.
 docs/SEGURANCA.md
+
+# Diretório temporário de vendor travado pelo Windows (remover depois)
+vendor_old*

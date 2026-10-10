@@ -1,0 +1,7 @@
+{
+  "name": "comsaude/convisita",
+  "description": "Sistema de visitas do COMSAÚDE",
+  "require-dev": { "phpunit/phpunit": "^11" },
+  "autoload": { "psr-4": { "Convisita\\": "src/" } },
+  "config": { "optimize-autoloader": true }
+}
