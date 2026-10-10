@@ -3,6 +3,25 @@
 declare(strict_types=1);
 date_default_timezone_set('America/Sao_Paulo');
 mb_internal_encoding('UTF-8');
+
+// Ambiente local (XAMPP/rede interna) vê erros; produção (hospedagem) não, para não vazar stack trace.
+function e_local(): bool
+{
+    $host = $_SERVER['HTTP_HOST'] ?? '';
+    return $host === '' // CLI
+        || preg_match('/^(localhost|127\.0\.0\.1|192\.168\.|10\.)/', $host) === 1;
+}
+error_reporting(E_ALL);
+ini_set('log_errors', '1');
+ini_set('display_errors', e_local() ? '1' : '0');
+
+// Cabeçalhos de segurança (CSP omitido: o app usa handlers/estilos inline; adicionar ao mover JS inline para assets).
+if (PHP_SAPI !== 'cli' && !headers_sent()) {
+    header('X-Content-Type-Options: nosniff');
+    header('X-Frame-Options: SAMEORIGIN');
+    header('Referrer-Policy: same-origin');
+}
+
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_name('convisita');
     $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');

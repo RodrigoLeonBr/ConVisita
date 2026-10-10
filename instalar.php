@@ -34,7 +34,8 @@ try {
         $ok = true;
     }
 } catch (Throwable $ex) {
-    $msgs[] = 'Erro: ' . $ex->getMessage();
+    error_log('instalar.php: ' . $ex->getMessage());
+    $msgs[] = e_local() ? 'Erro: ' . $ex->getMessage() : 'Erro ao instalar. Verifique a conexão com o banco e tente novamente.';
 }
 $titulo = 'Instalação';
 require __DIR__ . '/inc/topo.php';
