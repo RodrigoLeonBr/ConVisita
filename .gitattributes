@@ -1,0 +1,8 @@
+# Normaliza fim de linha: LF no repositório, nativo no disco.
+* text=auto eol=lf
+
+# Binários (sem conversão)
+*.xlsx binary
+*.pdf  binary
+*.rar  binary
+*.zip  binary

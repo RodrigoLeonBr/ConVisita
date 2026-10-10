@@ -9,16 +9,18 @@ $ciclo = linha('SELECT * FROM ciclo WHERE id = ?', [$cicloId]);
 $res = $cicloId ? resultados_ciclo($cicloId, $tipoId) : [];
 $completas = array_filter($res, fn($r) => $r['situacao'] === 'concluida');
 $exibir = in_array(get('exibir'), ['visitadas', 'sem_visita'], true) ? get('exibir') : 'todas';
+// Filtro de tipo de unidade reaproveitado nas consultas abaixo ($tipoId já é int, seguro concatenar).
+$filtroTipo = fn(string $conector, string $alias = 'u.') => $tipoId ? " $conector {$alias}tipo_id = $tipoId" : '';
 
 // Unidades ativas sem visita valida no ciclo (respeitam o filtro de tipo)
 $visitadas = array_column($res, 'unidade_id');
 $faltantes = array_values(array_filter(consulta(
     "SELECT u.id AS unidade_id, u.nome AS unidade, t.nome AS tipo_unidade, a.ultima_visita, a.visita_id, a.nota_final
        FROM unidade u LEFT JOIN tipo_unidade t ON t.id = u.tipo_id LEFT JOIN vw_agenda a ON a.unidade_id = u.id
-      WHERE u.situacao = 'ativa'" . ($tipoId ? ' AND u.tipo_id = ' . $tipoId : '') . ' ORDER BY u.nome'),
+      WHERE u.situacao = 'ativa'" . $filtroTipo('AND') . ' ORDER BY u.nome'),
     fn($u) => !in_array($u['unidade_id'], $visitadas)));
 
-$totUnid = (int)linha("SELECT COUNT(*) n FROM unidade WHERE situacao = 'ativa'" . ($tipoId ? ' AND tipo_id = ' . $tipoId : ''))['n'];
+$totUnid = (int)linha("SELECT COUNT(*) n FROM unidade WHERE situacao = 'ativa'" . $filtroTipo('AND', ''))['n'];
 $media = $completas ? array_sum(array_column($completas, 'nota_final')) / count($completas) : null;
 $dist = ['verde' => 0, 'amarelo' => 0, 'vermelho' => 0];
 foreach ($completas as $r) { $c = farol($r['nota_final']); if (isset($dist[$c])) $dist[$c]++; }
@@ -30,9 +32,9 @@ foreach (['perc_infra_fisica' => 'Infraestrutura Física', 'perc_infra_humana' =
 }
 $agenda = linha("SELECT SUM(situacao_agenda='atrasada') atrasadas, SUM(situacao_agenda='sem_visita') sem_visita,
                         SUM(situacao_agenda='proximos_30_dias') proximas FROM vw_agenda a JOIN unidade u ON u.id = a.unidade_id"
-                 . ($tipoId ? ' WHERE u.tipo_id = ' . $tipoId : ''));
+                 . $filtroTipo('WHERE'));
 $pend = (int)linha("SELECT COUNT(*) n FROM pendencia p JOIN unidade u ON u.id = p.unidade_id WHERE p.situacao IN ('aberta','em_andamento')"
-                 . ($tipoId ? ' AND u.tipo_id = ' . $tipoId : ''))['n'];
+                 . $filtroTipo('AND'))['n'];
 $itens = $cicloId ? medias_itens($cicloId, $tipoId) : [];
 usort($itens, fn($a, $b) => ($a['media'] ?? 9) <=> ($b['media'] ?? 9));
 
