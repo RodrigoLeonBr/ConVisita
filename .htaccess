@@ -3,7 +3,7 @@ Options -Indexes
 DirectoryIndex index.php
 
 # Arquivos que nao devem ser abertos pelo navegador
-<FilesMatch "(^config\.php$|\.(sql|py|md|json|xlsx)$)">
+<FilesMatch "(^config\.php$|^bootstrap\.php$|^routes\.php$|\.(sql|py|md|json|xlsx)$)">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>
@@ -13,12 +13,11 @@ DirectoryIndex index.php
   </IfModule>
 </FilesMatch>
 
-# Front controller: tudo que nao for arquivo/pasta real vai para index-fc.php
-# (na Task 11, com as paginas antigas removidas, passa a ser index.php)
+# Front controller: tudo que nao for arquivo/pasta real vai para index.php
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
-  RewriteRule ^ index-fc.php [L]
+  RewriteRule ^ index.php [L]
 </IfModule>

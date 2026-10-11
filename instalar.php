@@ -66,7 +66,7 @@ require __DIR__ . '/inc/topo.php';
   <?php foreach ($msgs as $m): ?><div class="aviso <?= $ok ? 'ok' : 'info' ?>"><?= e($m) ?></div><?php endforeach; ?>
   <?php if ($ok): ?>
     <div class="aviso ok"><b>Guarde agora:</b> usuário <b>admin</b>, senha <b><?= e($senhaGerada) ?></b>. Esta senha não será mostrada de novo — troque-a após o primeiro acesso em <i>Instrumento e cadastros › Usuários</i>.</div>
-    <a class="btn" href="login.php">Ir para o sistema</a>
+    <a class="btn" href="login">Ir para o sistema</a>
   <?php elseif (!$instalado || cfg('permitir_reinstalar')): ?>
     <form method="post">
       <label>Usuário administrativo do MySQL</label><input type="text" name="db_admin_user" value="root" required>

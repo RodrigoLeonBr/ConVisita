@@ -141,7 +141,7 @@ function rotulo(?string $s): string { return e(ROTULO_SITUACAO[$s] ?? (string)$s
 function usuario(): ?array { return $_SESSION['usuario'] ?? null; }
 function exige_login(): void
 {
-    if (!usuario()) { header('Location: login.php?volta=' . urlencode($_SERVER['REQUEST_URI'] ?? '')); exit; }
+    if (!usuario()) { header('Location: ' . (defined('BASE') ? BASE : '') . '/login?volta=' . urlencode($_SERVER['REQUEST_URI'] ?? '')); exit; }
 }
 function pode_editar(): bool { return in_array(usuario()['perfil'] ?? '', ['admin', 'conselheiro'], true); }
 function e_admin(): bool { return (usuario()['perfil'] ?? '') === 'admin'; }
