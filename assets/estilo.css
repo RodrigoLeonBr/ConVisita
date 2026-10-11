@@ -71,3 +71,5 @@ textarea{min-height:70px}
 .login{max-width:360px;margin:60px auto}
 @media print{.topo nav,.topo .usuario,.nao-imprimir,.rodape{display:none}body{background:#fff}.cartao{border:0;padding:0}}
 @media (max-width:720px){.item-aval{grid-template-columns:1fr}main{padding:12px}}
+/* Acessibilidade: foco de teclado sempre visível */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.btn:focus-visible{outline:2px solid #0f5c8c;outline-offset:2px}

@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-require __DIR__ . '/inc/base.php'; // reutiliza núcleo existente
+require __DIR__ . '/inc/base.php';       // núcleo: conexão, helpers, auth, csrf
+require __DIR__ . '/inc/consultas.php';  // consultas compartilhadas (painel, comparativo, export)
 spl_autoload_register(function (string $classe): void {
     $prefixo = 'Convisita\\';
     if (!str_starts_with($classe, $prefixo)) return;

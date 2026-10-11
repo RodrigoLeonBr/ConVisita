@@ -117,16 +117,22 @@ function farol($x): string
     }
     return 'cinza';
 }
+/** Rótulo textual do farol, para não depender só da cor (acessibilidade). */
+function rotulo_farol(string $cor): string
+{
+    return ['verde' => 'adequada', 'amarelo' => 'atenção', 'vermelho' => 'crítica', 'cinza' => 'sem dado'][$cor] ?? '';
+}
 function selo($x, bool $comTexto = true): string
 {
     $c = farol($x);
-    return '<span class="selo ' . $c . '">' . ($comTexto ? pct($x) : '&nbsp;') . '</span>';
+    $aria = ($x === null || $x === '') ? 'sem dado' : pct($x) . ' — ' . rotulo_farol($c);
+    return '<span class="selo ' . $c . '" role="img" aria-label="' . e($aria) . '">' . ($comTexto ? pct($x) : '&nbsp;') . '</span>';
 }
 function barra($x): string
 {
     if ($x === null) return '<div class="barra vazia"><span>não avaliada</span></div>';
     $w = max(0, min(100, (float)$x * 100));
-    return '<div class="barra"><i class="' . farol($x) . '" style="width:' . $w . '%"></i><span>' . pct($x) . '</span></div>';
+    return '<div class="barra" role="img" aria-label="' . e(pct($x) . ' — ' . rotulo_farol(farol($x))) . '"><i class="' . farol($x) . '" style="width:' . $w . '%"></i><span>' . pct($x) . '</span></div>';
 }
 const ROTULO_SITUACAO = [
     'rascunho' => 'Rascunho', 'concluida' => 'Concluída', 'incompleta' => 'Incompleta', 'em_conferencia' => 'Em conferência',
