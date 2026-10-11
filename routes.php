@@ -1,5 +1,5 @@
 <?php
-use Convisita\Controllers\{PainelController, AuthController, VisitaController, UnidadeController, AgendaController, PendenciaController, ComparativoController, InstrumentoController, ConselheiroController, UsuarioController, ExportController};
+use Convisita\Controllers\{PainelController, AuthController, VisitaController, UnidadeController, AgendaController, PendenciaController, ComparativoController, InstrumentoController, ConselheiroController, UsuarioController, ExportController, BackupController};
 return [
     'GET /'        => [PainelController::class, 'index'],
     'GET /painel'  => [PainelController::class, 'index'],
@@ -35,4 +35,7 @@ return [
     'GET /usuarios'            => [UsuarioController::class, 'index'],
     'POST /usuarios/salvar'    => [UsuarioController::class, 'salvar'],
     'GET /exportar'            => [ExportController::class, 'csv'],
+
+    'GET /backup'            => [BackupController::class, 'index'],
+    'POST /backup/salvar'    => [BackupController::class, 'salvar'],
 ];
