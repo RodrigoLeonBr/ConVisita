@@ -17,24 +17,24 @@ body{margin:0;font:14px/1.5 "Segoe UI",Roboto,Arial,sans-serif;color:var(--texto
 a{color:var(--primaria)}
 /* Layout: menu lateral + conteúdo */
 .app{display:flex;min-height:100vh}
-.barra-lat{width:240px;flex:0 0 240px;background:var(--fundo);border-right:1px solid var(--linha);
+.barra-lat{width:200px;flex:0 0 200px;background:var(--fundo);border-right:1px solid var(--linha);
   display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
-.barra-lat .marca{display:flex;align-items:center;justify-content:center;padding:14px 16px;border-bottom:1px solid var(--linha);text-decoration:none}
-.barra-lat .marca img{max-width:180px;width:100%;height:auto;background:#fff;border-radius:8px;padding:8px}
-.barra-lat nav{display:flex;flex-direction:column;padding:8px;gap:2px;flex:1}
-.barra-lat nav a{display:flex;align-items:center;min-height:44px;padding:8px 12px;border-radius:8px;
+.barra-lat .marca{display:flex;align-items:center;justify-content:center;padding:12px 10px;border-bottom:1px solid var(--linha);text-decoration:none}
+.barra-lat .marca img{max-width:150px;width:100%;height:auto;background:#fff;border-radius:8px;padding:6px}
+.barra-lat nav{display:flex;flex-direction:column;padding:6px;gap:2px;flex:1}
+.barra-lat nav a{display:flex;align-items:center;min-height:44px;padding:8px 10px;border-radius:8px;
   color:var(--texto);text-decoration:none}
 .barra-lat nav a:hover{background:var(--cinza-f)}
 .barra-lat nav a.ativo{background:var(--primaria);color:#fff}
 /* Submenu colapsável (Instrumento e cadastros) */
-.submenu>summary{display:flex;align-items:center;min-height:44px;padding:8px 12px;border-radius:8px;cursor:pointer;
+.submenu>summary{display:flex;align-items:center;min-height:44px;padding:8px 10px;border-radius:8px;cursor:pointer;
   color:var(--texto);list-style:none;user-select:none}
 .submenu>summary::-webkit-details-marker{display:none}
 .submenu>summary::after{content:"\25BE";margin-left:auto;font-size:11px;color:var(--suave);transition:transform .2s}
 .submenu[open]>summary::after{transform:rotate(180deg)}
 .submenu>summary:hover{background:var(--cinza-f)}
-.submenu .links{display:flex;flex-direction:column;gap:2px;padding-left:10px;margin:2px 0}
-.submenu .links a{display:flex;align-items:center;min-height:40px;padding:6px 12px;border-radius:8px;
+.submenu .links{display:flex;flex-direction:column;gap:2px;padding-left:6px;margin:2px 0}
+.submenu .links a{display:flex;align-items:center;min-height:40px;padding:6px 10px;border-radius:8px;
   color:var(--suave);text-decoration:none;font-size:13px}
 .submenu .links a:hover{background:var(--cinza-f);color:var(--texto)}
 .submenu .links a.ativo{background:var(--primaria);color:#fff}
@@ -150,6 +150,23 @@ textarea{min-height:70px}
 [data-bs-theme=dark] .selo.amarelo,[data-bs-theme=dark] .tag.proximos_30_dias,
 [data-bs-theme=dark] .tag.incompleta,[data-bs-theme=dark] .tag.em_andamento,
 [data-bs-theme=dark] .tag.em_conferencia,[data-bs-theme=dark] .obs{color:var(--amarelo)}
+/* Barras do farol: fills claros ficam ilegíveis com texto claro -> escurece no tema escuro */
+[data-bs-theme=dark] .barra i.verde{background:#2c744f}
+[data-bs-theme=dark] .barra i.amarelo{background:#7e6013}
+[data-bs-theme=dark] .barra i.vermelho{background:#9e4034}
+[data-bs-theme=dark] .barra span{color:var(--texto)}
+/* Zebra do Bootstrap (.table-striped) ficava com faixa clara no escuro: força tons escuros */
+[data-bs-theme=dark] .table{--bs-table-color:var(--texto);--bs-table-bg:#17202c;
+  --bs-table-striped-color:var(--texto);--bs-table-striped-bg:#1c2733;
+  --bs-table-hover-color:var(--texto);--bs-table-hover-bg:#222d3a;--bs-table-border-color:var(--linha)}
+/* Linhas sem visita usam Bootstrap .table-light (fundo claro fixo): torna escuro.
+   .table-light redefine o próprio --bs-table-striped-bg (claro) e a zebra é pintada
+   por box-shadow (--bs-table-bg-type), então é preciso sobrescrever TODAS as variantes. */
+[data-bs-theme=dark] .table-light{
+  --bs-table-color:var(--texto);--bs-table-bg:#222d3a;--bs-table-border-color:var(--linha);
+  --bs-table-striped-color:var(--texto);--bs-table-striped-bg:#2a3744;
+  --bs-table-active-color:var(--texto);--bs-table-active-bg:#30404f;
+  --bs-table-hover-color:var(--texto);--bs-table-hover-bg:#30404f}
 @media print{.barra-lat,.topbar,.overlay,.nao-imprimir,.rodape{display:none}body{background:#fff}.cartao{border:0;padding:0}main{max-width:none}}
 @media (max-width:720px){.item-aval{grid-template-columns:1fr}main{padding:12px}}
 /* Acessibilidade: foco de teclado sempre visível */
