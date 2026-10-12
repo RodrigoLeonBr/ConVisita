@@ -34,7 +34,7 @@ Perfis de acesso: administrador (tudo), conselheiro (lança visitas e pendência
 1. Abra o painel do XAMPP e ligue Apache e MySQL.
 2. Confirme que esta pasta está em `E:\xampp\htdocs\convisita`.
 3. Acesse `http://localhost/convisita/instalar.php` e clique em "Instalar agora". O instalador cria o banco `convisita` e carrega as 46 unidades e as 52 visitas históricas (ciclos 2023 e 2026).
-4. Entre em `http://localhost/convisita` com usuário `admin` e senha `comsaude` e troque a senha pelo link "Senha" do topo.
+4. Entre em `http://localhost/convisita` com usuário `admin` e senha `comsaude` e troque a senha pelo menu do usuário no canto superior direito (avatar › Alterar senha).
 5. Em Instrumento e cadastros › Backup e sincronização, informe o nome deste computador.
 
 Se o MySQL do XAMPP tiver senha para o usuário root, ajuste `config.php`. Os arquivos da pasta `sql` também podem ser importados pelo phpMyAdmin, na ordem numérica. Para acesso por outros computadores da rede, use o IP desta máquina no lugar de `localhost` (por exemplo, `http://192.168.0.10/convisita`).
@@ -76,7 +76,9 @@ Quando uma unidade recebe mais de uma visita no mesmo ciclo, todas ficam no hist
 
 | Caminho | Conteúdo |
 |---|---|
-| `*.php`, `inc/`, `assets/` | Aplicação (PHP 8 com MySQL ou MariaDB, sem dependências externas) |
+| `index.php`, `src/`, `views/`, `inc/` | Aplicação MVC em PHP 8 (front controller + router; controllers, views e núcleo compartilhado), com MySQL ou MariaDB |
+| `assets/` | CSS e JS do front-end (Bootstrap 5 via CDN; menu lateral responsivo e tema claro/escuro; sem etapa de build) |
+| `composer.json`, `tests/` | Apenas desenvolvimento: PHPUnit e testes. A aplicação tem autoloader próprio e não precisa do `vendor/` em produção |
 | `config.php` | Conexão com o banco e título do sistema (diferente em cada ambiente) |
 | `sql/01_estrutura.sql` | Tabelas e visões de cálculo |
 | `sql/02_referencia.sql` | Instrumento (dimensões e itens), faixas, tipos, ciclos e usuário inicial |
@@ -88,4 +90,4 @@ Quando uma unidade recebe mais de uma visita no mesmo ciclo, todas ficam no hist
 | `docs/` | Documentação técnica e manual do usuário |
 | `ferramentas/` | Scripts Python usados para extrair os dados da planilha e gerar a carga |
 
-As pastas `sql`, `inc`, `docs`, `planilha`, `ferramentas` e `backups`, além do `config.php` e dos arquivos `.sql`, `.md`, `.json`, `.py` e `.xlsx`, têm o acesso pelo navegador bloqueado por `.htaccess`.
+As pastas `src`, `views`, `sql`, `inc`, `docs`, `planilha`, `ferramentas` e `backups`, além do `config.php` e dos arquivos `.sql`, `.md`, `.json`, `.py` e `.xlsx`, têm o acesso pelo navegador bloqueado por `.htaccess`.
