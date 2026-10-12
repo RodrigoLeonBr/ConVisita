@@ -1,4 +1,5 @@
 <div class="row justify-content-center"><div class="col-md-4">
+  <div class="login-marca"><img src="<?= BASE ?>/logo_sistema.png" alt="CONVISITA — Conselho Municipal de Saúde"></div>
   <h1 class="h4 mb-3">Acesso ao sistema</h1>
   <p class="text-muted">Visitas do Conselho Municipal de Saúde</p>
   <?php if (!empty($erro)): ?><div class="alert alert-danger"><?= e($erro) ?></div><?php endif; ?>
